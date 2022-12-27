@@ -4,8 +4,8 @@ require('dotenv').config({
 
 const config = {
     server: {
-        appUrl: process.env.APP_URL || 'http://localhost:3000/',
-        host: process.env.HOST || 'localhost',
+        appUrl: process.env.APP_URL || 'http://0.0.0.0:3000/',
+        host: process.env.HOST || '0.0.0.0',
         port: process.env.PORT || 3000,
 
         db: {

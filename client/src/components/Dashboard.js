@@ -15,7 +15,7 @@ const Dashboard = () => {
     const uploadRepos = async (e) => {
         e.preventDefault();
         await service.saveRepos(token, repos).then(result => {
-            alert(result.message);
+            alert(result.data.message);
         }).catch(err => alert(err.message));
     }
 
@@ -27,7 +27,6 @@ const Dashboard = () => {
             setName(response.data.name);
             setPublicRepos(response.data.public_repos);
             setPrivateRepos(response.data.owned_private_repos);
-            console.log(response.data)
         })
         service.getRepos(token).then(response => {
             const mapped = response.data.map(repo => {

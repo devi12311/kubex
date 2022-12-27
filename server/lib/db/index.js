@@ -43,7 +43,6 @@ exports.plugin = {
             models[name] = await model(server, options, sequelize);
         }
 
-        //await Associations(models);
         // synchronise the database tables
         await sequelize.sync();
 
