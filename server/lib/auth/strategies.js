@@ -6,13 +6,14 @@ module.exports = async (server, options) => {
     const validateHeaderFunc = async function (decoded, request, h) {
 
         try {
+            const scope = 'user';
             const user = await User.findOne({
                 where: {
                     id: decoded.user
-                },
-                include: 'userRoles'
+                }
             });
             user.authType = 'normal';
+            user.currentRole = scope;
 
             if (!user) {
                 return { isValid: false };
@@ -20,7 +21,7 @@ module.exports = async (server, options) => {
 
             return {
                 isValid: true,
-                credentials: { user }
+                credentials: { user, scope }
             };
         }
         catch(err) {

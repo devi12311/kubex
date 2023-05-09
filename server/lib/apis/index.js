@@ -4,9 +4,9 @@ exports.plugin = {
     register: async (server, options) => {
 
         await server.register({
-            plugin: require('./github'),
+            plugin: require('./organization'),
             routes: {
-                prefix: '/github'
+                prefix: '/organization'
             },
             options: options
         });

@@ -6,13 +6,10 @@ module.exports = {
             type: Sequelize.INTEGER,
             primaryKey: true,
             allowNull: false,
+            defaultValue: Sequelize.literal('uuid_generate_v4()'),
         },
-        isPrivate: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-        },
-        url: {
-            type: Sequelize.STRING,
+        userId: {
+            type: Sequelize.UUID,
             allowNull: false,
         },
         name: {
