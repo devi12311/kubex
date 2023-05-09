@@ -7,7 +7,7 @@ module.exports = async (server, options) => {
 
     server.route({
         method: 'POST',
-        path: '/register',
+        path: '/auth/register',
         options: {
             auth: false,
             description: 'Register route',
@@ -24,7 +24,7 @@ module.exports = async (server, options) => {
 
     server.route({
         method: 'POST',
-        path: '/login',
+        path: '/auth/login',
         options: {
             auth: false,
             description: 'Register route',
@@ -44,5 +44,45 @@ module.exports = async (server, options) => {
             ],
         },
         handler: Handlers.login
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/auth/logout',
+        options: {
+            auth: 'kubex',
+            description: 'User logs out',
+            tags: ['api', 'auth', 'logout'],
+            validate: {
+                payload: Joi.object({
+                    refreshToken: Joi.string().required(),
+                }).label('UserLogoutPayload')
+            },
+        },
+        handler: Handlers.logout
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/auth/token',
+        options: {
+            auth: false,
+            description: 'Get an access token with a refresh token',
+            tags: ['api', 'auth'],
+            validate: {
+                payload: Joi.object({
+                    refreshToken: Joi.string().required()
+                }).label('GetTokenPayload')
+            },
+            pre: [
+                {
+                    assign: 'auth',
+                    async method(request, h) {
+                        return new AuthHelpers(options.auth)
+                    }
+                }
+            ]
+        },
+        handler: Handlers.getNewAccessToken
     });
 }

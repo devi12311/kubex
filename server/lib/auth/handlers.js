@@ -77,4 +77,84 @@ module.exports = {
             return Boom.badImplementation(err);
         }
     },
+
+    logout: async function (request, h) {
+        const { Token } = request.server.app.models;
+        const { user } = request.auth.credentials;
+        const { refreshToken } = request.payload
+        try {
+            if (refreshToken) {
+                await Token.destroy({
+                    where: {
+                        userId: user.id,
+                        refreshToken
+                    }
+                })
+            }
+
+            return {
+                message: "Logged out successfully.",
+            }
+        } catch (err) {
+            request.log(['auth', 'logout'], err, request);
+            return Boom.badImplementation(err);
+        }
+    },
+
+    getNewAccessToken: async function (request, h) {
+
+        const AuthHelpers = request.pre.auth;
+        const { Token, User } = request.server.app.models;
+        const { refreshToken } = request.payload;
+
+        try {
+            const token = await Token.findOne({
+                where: {
+                    refreshToken: refreshToken
+                },
+                include: {
+                    model: User,
+                    as: 'user'
+                },
+            })
+
+            if (!token) {
+                return Boom.badRequest("Not valid or expired refresh token.")
+            }
+
+            const tokenExpireDate = new Date(token.expiresAt);
+            const dateNow = new Date();
+
+            if (tokenExpireDate < dateNow) {
+                return Boom.badRequest("Not valid or expired refresh token.")
+            }
+
+            const newRefreshToken = await Token.create({
+                userId: token.userId
+            });
+
+            const generatedData = await AuthHelpers.generateAccessToken({
+                user: { id: token.userId },
+                token: newRefreshToken,
+                authType: 'normal'
+            });
+
+            await Token.destroy({
+                where: {
+                    refreshToken: refreshToken
+                }
+            })
+
+            return {
+                accessToken: generatedData.accessToken,
+                refreshToken: generatedData.refreshToken,
+                expiresIn: generatedData.expiresIn,
+                tokenType: generatedData.tokenType,
+                expiresAt: generatedData.expiresAt,            }
+
+        } catch (err) {
+            request.log(['auth', 'getNewAccessToken'], err, request);
+            return Boom.forbidden(err)
+        }
+    },
 }

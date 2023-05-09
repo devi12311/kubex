@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize');
 const Path = require('path');
 const Fs = require('fs');
+const Associations = require('./associations')
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -43,6 +44,7 @@ exports.plugin = {
             models[name] = await model(server, options, sequelize);
         }
 
+        await Associations(models);
         // synchronise the database tables
         await sequelize.sync();
 
