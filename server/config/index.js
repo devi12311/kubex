@@ -11,10 +11,15 @@ const config = {
         db: {
             host: process.env.DB_HOST || 'localhost',
             port: process.env.DB_PORT || 5432,
-            user: process.env.DB_USER || 'postgres',
-            pass: process.env.DB_PASS || '',
-            name: process.env.DB_NAME || 'github'
-        }
+            user: process.env.DB_USER || 'kubex',
+            pass: process.env.DB_PASS || 'devi12311',
+            name: process.env.DB_NAME || 'kubex'
+        },
+        auth: {
+            secret: process.env.AUTH_SECRET || 'aoisjioqwjdoqwijdqwodj',
+            refreshTokenExpiration: process.env.AUTH_REFRESH_TOKEN_EXPIRATION || 60 * 60 * 24 * 60,
+            accessTokenExpiration: process.env.AUTH_ACCESS_TOKEN_EXPIRATION || 60 * 60 * 4,
+        },
     }
 }
 

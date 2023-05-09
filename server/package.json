@@ -17,15 +17,21 @@
   },
   "homepage": "https://github.com/devi12311/paperclicks_assignment#readme",
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
     "@hapi/glue": "^9.0.0",
     "@hapi/hapi": "^21.1.0",
     "@hapi/wreck": "^18.0.0",
     "axios": "^1.2.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
+    "hapi-auth-jwt2": "^10.4.0",
     "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
+    "rand-token": "^1.0.1",
     "sequelize": "^6.28.0"
   }
 }

@@ -23,9 +23,22 @@ const manifestConfiguration = {
             {
                 plugin: require('./apis'),
                 options: {
-                    github: config.server.github
+                    github: config.server.github,
                 }
-            }
+            },
+            {
+                plugin: require('./helpers'),
+            },
+            {
+                plugin: require('./middlewares'),
+                options: {}
+            },
+            {
+                plugin: require('./auth'),
+                options: {
+                    auth: config.server.auth
+                }
+            },
         ]
     }
 }
