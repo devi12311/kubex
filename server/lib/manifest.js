@@ -59,6 +59,10 @@ const manifestConfiguration = {
             {
                 plugin: require('./middlewares'),
                 options: {}
+            },
+            {
+                plugin: require('./resources'),
+                options: {}
             }
         ]
     }

@@ -13,9 +13,9 @@ module.exports = async (server, options) => {
             description: 'Register route',
             validate: {
                 payload: Joi.object({
-                    username: Joi.string().required(),
-                    password: Joi.string().required(),
-                    email: Joi.string().required(),
+                    username: Joi.string().trim().required(),
+                    password: Joi.string().trim().required(),
+                    email: Joi.string().trim().required(),
                 })
             },
         },
@@ -30,8 +30,8 @@ module.exports = async (server, options) => {
             description: 'Register route',
             validate: {
                 payload: Joi.object({
-                    username: Joi.string().required(),
-                    password: Joi.string().required(),
+                    username: Joi.string().trim().required(),
+                    password: Joi.string().trim().required(),
                 })
             },
             pre: [
@@ -41,6 +41,12 @@ module.exports = async (server, options) => {
                         return new AuthHelpers(options.auth)
                     }
                 },
+                {
+                    assign: 'mapper',
+                    async method (request, h) {
+                        return server.app.resources.user.modelMapper
+                    }
+                }
             ],
         },
         handler: Handlers.login

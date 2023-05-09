@@ -21,7 +21,11 @@ module.exports = {
                 }
             }
 
-            const user = {};
+            const user = await User.create({
+                username: username,
+                password,
+                email
+            })
 
             const mappedUser = await db.transaction(async (t) => {
                     user.username = username.trim();
@@ -42,6 +46,7 @@ module.exports = {
         const { Token, User } = request.server.app.models;
         const AuthHelpers = request.pre.auth;
         const { password, username } = request.payload;
+        const { mapper } = request.pre;
 
         if (!password) {
             return Boom.badRequest(
@@ -70,7 +75,7 @@ module.exports = {
                 authType: 'normal'
             })
 
-            return { user, auth: { ...generatedData } };
+            return { ...mapper(user), auth: { ...generatedData } };
         } catch (err) {
             console.log(err)
             request.log(['auth', 'login'], err, request);

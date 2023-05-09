@@ -4,11 +4,13 @@ module.exports = async (models) => {
     // inject all models associations
     await Organization.belongsTo(User, {
         foreignKey: 'userId',
-        targetKey: 'id'
+        targetKey: 'id',
+        constraints: false
     })
 
     await User.hasMany(Organization, {
         foreignKey: 'id',
+        constraints: false
     })
 
     await Token.belongsTo(User);

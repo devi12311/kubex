@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 module.exports = {
     attributes: {
         id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.UUID,
             primaryKey: true,
             allowNull: false,
             defaultValue: Sequelize.literal('uuid_generate_v4()'),
