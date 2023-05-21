@@ -3,7 +3,8 @@ exports.plugin = {
     register: async function (server, options) {
         server.app.resources = {
             user: require('./mappers/user'),
-            organization: require('./mappers/organization')
+            organization: require('./mappers/organization'),
+            cluster: require('./mappers/cluster')
         }
     }
 }

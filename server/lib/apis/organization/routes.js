@@ -1,7 +1,6 @@
 const Handlers = require('./handlers');
 const Joi = require('joi');
 const Boom = require('@hapi/boom');
-const {or} = require("sequelize");
 
 module.exports = async (server, options) => {
 
