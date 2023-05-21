@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const service  = {
-    login: async (token) => {
-        return axios.get(`http://localhost:3000/auth/github?token=${token}`);
+    login: async ({ username, password }) => {
+        return axios.post(`http://localhost:3000/auth/login`, { username, password }).then(result => result.data);
     },
 
     getRepos: async (token) => {

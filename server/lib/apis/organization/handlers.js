@@ -31,6 +31,8 @@ module.exports = {
                 userId
             }
         })
+
+        return mapper(organizations)
     },
 
     getOne: async (request, h) => {
@@ -42,7 +44,7 @@ module.exports = {
         const { organization } = request.pre;
         try {
             await organization.destroy();
-            return { message: 'Organization deleted'}
+            return { message: 'Organization deleted' }
         } catch (err) {
             return Boom.badImplementation(err)
         }

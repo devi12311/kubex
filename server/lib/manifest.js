@@ -63,6 +63,10 @@ const manifestConfiguration = {
             {
                 plugin: require('./resources'),
                 options: {}
+            },
+            {
+                plugin: require('./services'),
+                options: {}
             }
         ]
     }
