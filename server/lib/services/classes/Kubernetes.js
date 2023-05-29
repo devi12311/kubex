@@ -1,19 +1,29 @@
 const k8s = require('@kubernetes/client-node');
 
 class KubernetesService {
-    constructor({ clusterUrl }) {
-        this.clusterUrl = clusterUrl;
+    constructor() {
         this.kc = new k8s.KubeConfig();
     }
 
-    async initializeConfig() {
-        this.kc.loadFromFile();
-        this.kc.setCurrentContext('my-context');
+    async initializeConfig({ file }) {
+        try {
+            this.kc.loadFromString(file);
+            this.kc.setCurrentContext('kubernetes-admin@k8s-clickflare');
+        } catch (err) {
+            console.log(err)
+            throw new Error("Invalid kube config!")
+        }
     }
 
     async getPods(namespace) {
         const k8sApi = this.kc.makeApiClient(k8s.CoreV1Api);
         const { body } = await k8sApi.listNamespacedPod(namespace);
+        return body.items;
+    }
+
+    async getNamespaces () {
+        const k8sApi = this.kc.makeApiClient(k8s.CoreV1Api);
+        const { body } = await k8sApi.listNamespace();
         return body.items;
     }
 

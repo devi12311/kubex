@@ -18,5 +18,13 @@ exports.plugin = {
             },
             options: options
         });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces'
+            },
+            options: options
+        });
     }
 }

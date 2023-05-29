@@ -53,11 +53,11 @@ const manifestConfiguration = {
                 }
             },
             {
-                plugin: require('./apis'),
+                plugin: require('./middlewares'),
                 options: {}
             },
             {
-                plugin: require('./middlewares'),
+                plugin: require('./apis'),
                 options: {}
             },
             {
