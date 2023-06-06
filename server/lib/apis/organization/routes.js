@@ -22,6 +22,8 @@ module.exports = async (server, options) => {
             if (!organization) {
                 return Boom.notFound('Organization not found')
             }
+
+            return organization
         }
     }
 

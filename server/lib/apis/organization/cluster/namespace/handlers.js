@@ -1,34 +1,47 @@
+const Boom = require('@hapi/boom');
+
 module.exports = {
 
     getAll: async (request, h) => {
-        const { Kubernetes } = request.server.app.services;
-        const { cluster } = request.pre;
+        const { NamespaceManager } = request.server.app.services;
+        const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
 
         try {
-            const kubernetesService = new Kubernetes();
+            const namespaceService = new NamespaceManager({ file: kubeConfig, context });
 
-            await kubernetesService.initializeConfig({file: kubeConfig});
-
-            return kubernetesService.getNamespaces();
+            return namespaceService.getNamespaces();
         } catch (e) {
             console.log(e)
+            return Boom.badImplementation(e)
         }
     },
 
-    getPods: async (request, h) => {
-        const { Kubernetes } = request.server.app.services;
-        const { cluster } = request.pre;
+    create: async (request, h) => {
+        const { NamespaceManager } = request.server.app.services;
+        const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
+        const { name } = request.payload;
 
-        try {
-            const kubernetesService = new Kubernetes();
+        const namespaceService = new NamespaceManager({ file: kubeConfig, context });
 
-            await kubernetesService.initializeConfig({file: kubeConfig});
+        return await namespaceService.createNamespace(name);
 
-            return kubernetesService.getPods('apisix');
-        } catch (e) {
-            console.log(e)
-        }
-    }
+        //TODO error check if namespace already exists
+
+    },
+
+    delete: async (request, h) => {
+        const { NamespaceManager } = request.server.app.services;
+        const { cluster, context } = request.pre;
+        const { kubeConfig } = cluster;
+        const { name } = request.payload;
+
+        const namespaceService = new NamespaceManager({ file: kubeConfig, context });
+
+        return await namespaceService.deleteNamespace(name);
+
+        //TODO error check if namespace already exists
+
+    },
 }

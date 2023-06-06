@@ -2,7 +2,7 @@
 const _modelMapper = (organization) => {
     return {
         id: organization.id,
-        name: organization.username,
+        name: organization.name,
     };
 };
 

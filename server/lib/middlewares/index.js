@@ -1,4 +1,6 @@
 const Boom = require("@hapi/boom");
+const yaml = require('js-yaml');
+
 exports.plugin = {
     pkg: require('./package.json'),
     register: async function (server, options) {
@@ -46,9 +48,23 @@ exports.plugin = {
             }
         }
 
+        const context = {
+            assign: 'context',
+            method: async (request, h) => {
+                const { kubeConfig } = request.pre.cluster;
+                const yamlKubeConfig = yaml.load(kubeConfig);
+                const context = yamlKubeConfig.contexts;
+                if (context.length === 0) {
+                    return Boom.notFound('No context available');
+                }
+                return yamlKubeConfig.contexts[0].name;
+            }
+        }
+
         server.app.middlewares = {
             organization,
-            cluster
+            cluster,
+            context
         }
     }
 }
