@@ -25,9 +25,11 @@ module.exports = {
 
         const namespaceService = new NamespaceManager({ file: kubeConfig, context });
 
-        return await namespaceService.createNamespace(name);
-
-        //TODO error check if namespace already exists
+        try {
+            return await namespaceService.createNamespace(name);
+        } catch (e) {
+            return Boom.badRequest(e.body.message);
+        }
 
     },
 
@@ -35,11 +37,16 @@ module.exports = {
         const { NamespaceManager } = request.server.app.services;
         const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
-        const { name } = request.payload;
+        const { name } = request.params;
 
         const namespaceService = new NamespaceManager({ file: kubeConfig, context });
 
-        return await namespaceService.deleteNamespace(name);
+        try {
+            return await namespaceService.deleteNamespace(name);
+        } catch (e) {
+            return Boom.badRequest(e.body.message);
+        }
+
 
         //TODO error check if namespace already exists
 

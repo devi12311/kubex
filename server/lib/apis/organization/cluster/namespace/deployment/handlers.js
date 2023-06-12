@@ -3,15 +3,15 @@ const Boom = require('@hapi/boom');
 module.exports = {
 
     getAll: async (request, h) => {
-        const { PodManager } = request.server.app.services;
+        const { DeploymentManager } = request.server.app.services;
         const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
         const { namespace } = request.params;
 
         try {
-            const podService = new PodManager({ file: kubeConfig, context, namespace });
+            const deploymentService = new DeploymentManager({ file: kubeConfig, context, namespace });
 
-            return podService.getAllPods();
+            return deploymentService.getAllDeployments();
         } catch (e) {
             console.log(e)
             return Boom.badRequest(e.body.message);
@@ -19,15 +19,15 @@ module.exports = {
     },
 
     getOne: async (request, h) => {
-        const { PodManager } = request.server.app.services;
+        const { DeploymentManager } = request.server.app.services;
         const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
         const { namespace, name } = request.params;
 
         try {
-            const podService = new PodManager({ file: kubeConfig, context, namespace });
+            const deploymentService = new DeploymentManager({ file: kubeConfig, context, namespace });
 
-            return await podService.getPod(name);
+            return await deploymentService.getDeployment(name);
         } catch (e) {
             console.log(e)
             return Boom.badRequest(e.body.message);
@@ -35,22 +35,22 @@ module.exports = {
     },
 
     create: async (request, h) => {
-        const { PodManager } = request.server.app.services;
+        const { DeploymentManager } = request.server.app.services;
         const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
         const { metadata, spec } = request.payload;
         const { namespace } = request.params;
 
 
-        const podService = new PodManager({ file: kubeConfig, context, namespace });
+        const deploymentService = new DeploymentManager({ file: kubeConfig, context, namespace });
 
         try {
 
-            const newPod = {
+            const newDeployment = {
                 metadata, spec
             }
 
-            return await podService.createPod(newPod);
+            return await deploymentService.createDeployment(newDeployment);
         } catch (e) {
             console.log(e)
             return Boom.badRequest(e.body.message);
@@ -59,15 +59,15 @@ module.exports = {
     },
 
     delete: async (request, h) => {
-        const { PodManager } = request.server.app.services;
+        const { DeploymentManager } = request.server.app.services;
         const { cluster, context } = request.pre;
         const { kubeConfig } = cluster;
         const { name, namespace } = request.params;
 
-        const podService = new PodManager({ file: kubeConfig, context, namespace });
+        const deploymentService = new DeploymentManager({ file: kubeConfig, context, namespace });
 
         try {
-            return await podService.deletePod(name);
+            return await deploymentService.deletePod(name);
         } catch (e) {
             return Boom.badRequest(e.body.message);
         }

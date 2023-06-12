@@ -8,7 +8,7 @@ module.exports = async (server, options) => {
         method: 'GET',
         path: '/',
         options: {
-            description: 'Get pods of a namespace',
+            description: 'Get deployments of a namespace',
             auth: {
                 access: {
                     scope: ['user']
@@ -34,7 +34,7 @@ module.exports = async (server, options) => {
         method: 'POST',
         path: '/',
         options: {
-            description: 'Create pod',
+            description: 'Create deployment',
             auth: {
                 access: {
                     scope: ['user']
@@ -64,7 +64,7 @@ module.exports = async (server, options) => {
         method: 'GET',
         path: '/{name}',
         options: {
-            description: 'Get a pod',
+            description: 'Get a deployment',
             auth: {
                 access: {
                     scope: ['user']
@@ -91,7 +91,7 @@ module.exports = async (server, options) => {
         method: 'DELETE',
         path: '/{name}',
         options: {
-            description: 'Delete a pod',
+            description: 'Delete a deployment',
             auth: {
                 access: {
                     scope: ['user']

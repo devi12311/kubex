@@ -26,5 +26,21 @@ exports.plugin = {
             },
             options: options
         });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/pod'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/pods'
+            },
+            options: options
+        });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/deployment'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/delpoyments'
+            },
+            options: options
+        });
     }
 }

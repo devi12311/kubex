@@ -33,10 +33,12 @@ exports.plugin = {
             async method(request, h) {
                 const { Cluster } = server.app.models;
                 const { organization } = request.pre;
+                const { clusterId } = request.params;
 
                 const cluster = await Cluster.findOne({
                     where: {
-                        organizationId: organization.id
+                        organizationId: organization.id,
+                        id: clusterId
                     }
                 })
 
