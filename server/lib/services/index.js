@@ -5,6 +5,8 @@ const NamespaceManager = require('./classes/NamespaceManager');
 const PodManager = require('./classes/PodManager');
 const DeploymentManager = require ('./classes/DeploymentManager');
 const StatefulSetManager = require('./classes/StatefulSetManager');
+const ServiceManager = require('./classes/ServiceManager');
+const IngressManager = require('./classes/IngressManager');
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -14,7 +16,9 @@ exports.plugin = {
             NamespaceManager,
             PodManager,
             DeploymentManager,
-            StatefulSetManager
+            StatefulSetManager,
+            ServiceManager,
+            IngressManager
         };
     }
 };

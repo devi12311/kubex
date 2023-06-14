@@ -58,6 +58,22 @@ exports.plugin = {
             },
             options: options
         });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/service'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/services'
+            },
+            options: options
+        });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/ingress'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/ingresses'
+            },
+            options: options
+        });
     }
 
 }
