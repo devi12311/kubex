@@ -4,6 +4,7 @@ const KubernetesService = require('./classes/Kubernetes');
 const NamespaceManager = require('./classes/NamespaceManager');
 const PodManager = require('./classes/PodManager');
 const DeploymentManager = require ('./classes/DeploymentManager');
+const StatefulSetManager = require('./classes/StatefulSetManager');
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -12,7 +13,8 @@ exports.plugin = {
             Kubernetes: KubernetesService,
             NamespaceManager,
             PodManager,
-            DeploymentManager
+            DeploymentManager,
+            StatefulSetManager
         };
     }
 };

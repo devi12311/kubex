@@ -8,7 +8,7 @@ module.exports = async (server, options) => {
         method: 'GET',
         path: '/',
         options: {
-            description: 'Get deployments of a namespace',
+            description: 'Get stateful-sets of a namespace',
             auth: {
                 access: {
                     scope: ['user']
@@ -34,7 +34,7 @@ module.exports = async (server, options) => {
         method: 'POST',
         path: '/',
         options: {
-            description: 'Create deployment',
+            description: 'Create a stateful-set',
             auth: {
                 access: {
                     scope: ['user']
@@ -64,7 +64,7 @@ module.exports = async (server, options) => {
         method: 'GET',
         path: '/{name}',
         options: {
-            description: 'Get a deployment',
+            description: 'Get a stateful-set',
             auth: {
                 access: {
                     scope: ['user']
@@ -91,7 +91,7 @@ module.exports = async (server, options) => {
         method: 'PUT',
         path: '/{name}',
         options: {
-            description: 'Patch a deployment',
+            description: 'Patch a stateful-set',
             auth: {
                 access: {
                     scope: ['user']
@@ -124,7 +124,7 @@ module.exports = async (server, options) => {
         method: 'DELETE',
         path: '/{name}',
         options: {
-            description: 'Delete a deployment',
+            description: 'Delete a stateful-set',
             auth: {
                 access: {
                     scope: ['user']

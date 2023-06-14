@@ -7,11 +7,8 @@ class KubernetesService {
         kc.setCurrentContext(context);
         this.apiCoreV1 = kc.makeApiClient(k8s.CoreV1Api);
         this.apiAppsV1 = kc.makeApiClient(k8s.AppsV1Api);
+        this.customObjectsApi = kc.makeApiClient(k8s.CustomObjectsApi);
         this.namespace = namespace;
-    }
-    async getPods(namespace) {
-        const { body } = await client.listNamespacedPod(namespace);
-        return body.items;
     }
 
     async getNamespaces () {
@@ -19,43 +16,20 @@ class KubernetesService {
         return body.items;
     }
 
-    async createDeployment(namespace, deploymentName, image) {
-        const client = this.configureClient();
-        const deploymentManifest = {
-            apiVersion: 'apps/v1',
-            kind: 'Deployment',
-            metadata: {
-                name: deploymentName,
-                namespace: namespace,
-            },
-            spec: {
-                replicas: 1,
-                selector: {
-                    matchLabels: {
-                        app: deploymentName,
-                    },
-                },
-                template: {
-                    metadata: {
-                        labels: {
-                            app: deploymentName,
-                        },
-                    },
-                    spec: {
-                        containers: [
-                            {
-                                name: deploymentName,
-                                image: image,
-                            },
-                        ],
-                    },
-                },
-            },
-        };
-        await client.createNamespacedDeployment(namespace, deploymentManifest);
+
+    async createCustomObject (yaml, namespace) {
+        const [group, version] = yaml.apiVersion.split('/');
+        const { kind } = yaml;
+        const plural = `${kind}s`;
+        return await this.customObjectsApi.createNamespacedCustomObject(
+            group ,
+            version,
+            namespace,
+            plural,
+            yaml
+        );
+
     }
-
-
 }
 
 module.exports = KubernetesService;

@@ -18,6 +18,28 @@ module.exports = {
         }
     },
 
+    patch: async (request, h) => {
+        const { DeploymentManager } = request.server.app.services;
+        const { cluster, context } = request.pre;
+        const { kubeConfig } = cluster;
+        const { namespace, name } = request.params;
+        const { patch } = request.payload;
+
+        try {
+            const deploymentService = new DeploymentManager({ file: kubeConfig, context, namespace });
+
+            if (!patch) {
+                return await deploymentService.getDeployment(name);
+            }
+
+            return await deploymentService.patchDeployment(name, patch);
+
+        } catch (e) {
+            console.log(e)
+            return Boom.badRequest(e.body.message);
+        }
+    },
+
     getOne: async (request, h) => {
         const { DeploymentManager } = request.server.app.services;
         const { cluster, context } = request.pre;

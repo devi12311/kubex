@@ -38,9 +38,26 @@ exports.plugin = {
         await server.register({
             plugin: require('./organization/cluster/namespace/deployment'),
             routes: {
-                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/delpoyments'
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/deployments'
+            },
+            options: options
+        });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/stateful-sets'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/stateful-sets'
+            },
+            options: options
+        });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/custom'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/custom'
             },
             options: options
         });
     }
+
 }

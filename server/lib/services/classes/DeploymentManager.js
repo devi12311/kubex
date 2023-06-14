@@ -28,6 +28,20 @@ class DeploymentManager {
         const response = await this.apiAppsV1.deleteNamespacedDeployment(deploymentName, this.namespace);
         return response.body;
     }
+
+    async patchDeployment(deploymentName, patch) {
+        const response = await this.apiAppsV1.patchNamespacedDeployment(
+            deploymentName,
+            this.namespace,
+            patch,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { headers: { 'Content-Type': 'application/strategic-merge-patch+json' } }
+        );
+        return response.body;
+    }
 }
 
 module.exports = DeploymentManager;
