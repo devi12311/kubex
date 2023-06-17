@@ -74,6 +74,14 @@ exports.plugin = {
             },
             options: options
         });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/configmap'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/configmaps'
+            },
+            options: options
+        });
     }
 
 }

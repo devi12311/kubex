@@ -7,6 +7,7 @@ const DeploymentManager = require ('./classes/DeploymentManager');
 const StatefulSetManager = require('./classes/StatefulSetManager');
 const ServiceManager = require('./classes/ServiceManager');
 const IngressManager = require('./classes/IngressManager');
+const ConfigMapManager = require('./classes/ConfigMapManager');
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -18,7 +19,8 @@ exports.plugin = {
             DeploymentManager,
             StatefulSetManager,
             ServiceManager,
-            IngressManager
+            IngressManager,
+            ConfigMapManager
         };
     }
 };
