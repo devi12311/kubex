@@ -82,6 +82,14 @@ exports.plugin = {
             },
             options: options
         });
+
+        await server.register({
+            plugin: require('./organization/cluster/node'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/nodes'
+            },
+            options: options
+        });
     }
 
 }
