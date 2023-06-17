@@ -9,6 +9,7 @@ const ServiceManager = require('./classes/ServiceManager');
 const IngressManager = require('./classes/IngressManager');
 const ConfigMapManager = require('./classes/ConfigMapManager');
 const NodeManager = require('./classes/NodeManager');
+const SecretManager = require('./classes/SecretManager');
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -22,7 +23,8 @@ exports.plugin = {
             ServiceManager,
             IngressManager,
             ConfigMapManager,
-            NodeManager
+            NodeManager,
+            SecretManager
         };
     }
 };

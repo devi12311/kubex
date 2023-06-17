@@ -84,6 +84,14 @@ exports.plugin = {
         });
 
         await server.register({
+            plugin: require('./organization/cluster/namespace/secret'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/secrets'
+            },
+            options: options
+        });
+
+        await server.register({
             plugin: require('./organization/cluster/node'),
             routes: {
                 prefix: '/organizations/{organizationId}/clusters/{clusterId}/nodes'
