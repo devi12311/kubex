@@ -92,6 +92,22 @@ exports.plugin = {
         });
 
         await server.register({
+            plugin: require('./organization/cluster/namespace/pv'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/pv'
+            },
+            options: options
+        });
+
+        await server.register({
+            plugin: require('./organization/cluster/namespace/pvc'),
+            routes: {
+                prefix: '/organizations/{organizationId}/clusters/{clusterId}/namespaces/{namespace}/pvc'
+            },
+            options: options
+        });
+
+        await server.register({
             plugin: require('./organization/cluster/node'),
             routes: {
                 prefix: '/organizations/{organizationId}/clusters/{clusterId}/nodes'

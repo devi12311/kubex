@@ -28,7 +28,6 @@ class KubernetesService {
             plural,
             yaml
         );
-
     }
 }
 

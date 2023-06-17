@@ -10,6 +10,8 @@ const IngressManager = require('./classes/IngressManager');
 const ConfigMapManager = require('./classes/ConfigMapManager');
 const NodeManager = require('./classes/NodeManager');
 const SecretManager = require('./classes/SecretManager');
+const PersistentVolumeClaimManager = require('./classes/PersistentVolumeClaimManager');
+const PersistentVolumeManager = require('./classes/PersistentVolumeManager');
 
 exports.plugin = {
     pkg: require('./package.json'),
@@ -24,7 +26,9 @@ exports.plugin = {
             IngressManager,
             ConfigMapManager,
             NodeManager,
-            SecretManager
+            SecretManager,
+            PersistentVolumeClaimManager,
+            PersistentVolumeManager
         };
     }
 };
