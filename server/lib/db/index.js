@@ -11,17 +11,18 @@ exports.plugin = {
         const db = options;
         const pgConnString = `postgres://${db.user}:${db.pass}@${db.host}:${db.port}`;
 
-        const sequelizeTemp = new Sequelize(pgConnString);
-        const [results] = await sequelizeTemp.query(
-            `SELECT 1 from pg_database WHERE datname='${db.name}'`,
-            { logging: false }
-        );
-        if (!results.length) {
-            await sequelizeTemp.query(`CREATE DATABASE "${db.name}"`);
-        }
-        await sequelizeTemp.close();
+        // const sequelizeTemp = new Sequelize(pgConnString);
+        // const [results] = await sequelizeTemp.query(
+        //     `SELECT 1 from pg_database WHERE datname='${db.name}'`,
+        //     { logging: false }
+        // );
+        // if (!results.length) {
+        //     await sequelizeTemp.query(`CREATE DATABASE "${db.name}"`);
+        // }
+        // await sequelizeTemp.close();
 
         // Start the connection with the database
+        console.log(pgConnString + `/${db.name}`)
         const sequelize = new Sequelize(
             pgConnString + `/${db.name}`,
             {
@@ -31,6 +32,8 @@ exports.plugin = {
         );
 
         await sequelize.authenticate();
+
+        await sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
 
         console.log('Database connected');
 

@@ -1,12 +1,12 @@
 version: '3.8'
 services:
-  db:
+  postgres:
     image: postgres:14.1-alpine
     restart: always
-    hostname: postgres
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=D3345123Galsjd
+      - POSTGRES_DB=kubex
     ports:
       - '5432:5432'
     volumes:
@@ -23,8 +23,10 @@ services:
       DB_HOST: postgres
       DB_USER: root
       DB_PASS: D3345123Galsjd
-      DB_NAME: github
+      DB_NAME: kubex
       DB_PORT: 5432
+    depends_on:
+      - postgres
     networks:
       - main
   client:
