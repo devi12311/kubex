@@ -10,21 +10,6 @@ const SidebarItem = ({ icon, label, link, children, exact = false, permissions }
   const navigate = useNavigate();
   const isActive = useActiveMenuItem(link, children, exact);
   const [isOpen, setIsOpen] = useState(isActive);
-  const [hasAccess, setHasAccess] = useState(false);
-
-  const userPermissions = useSelector((state) =>
-    _.get(state, 'permissionsReducer.permissions', [])
-  );
-
-  useEffect(() => {
-    if (
-      userPermissions.length > 0 &&
-      permissions &&
-      permissions.some((permission) => userPermissions.includes(permission))
-    ) {
-      setHasAccess(true);
-    }
-  }, [permissions, userPermissions]);
 
   const handleClick = () => {
     if (link) {
@@ -34,7 +19,7 @@ const SidebarItem = ({ icon, label, link, children, exact = false, permissions }
     setIsOpen((prev) => !prev);
   };
 
-  return hasAccess ? (
+  return (
     <li className="mx-2">
       <span
         onClick={handleClick}
@@ -60,7 +45,7 @@ const SidebarItem = ({ icon, label, link, children, exact = false, permissions }
         <ul className="flex flex-col bg-brand-header-bg">{children}</ul>
       </Collapse>
     </li>
-  ) : null;
+  );
 };
 
 export default SidebarItem;

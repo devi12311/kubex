@@ -8,27 +8,17 @@ import { Link } from 'react-router-dom';
 const Sidebar = () => {
   const { t } = useTranslation();
   return (
-    <aside className="h-screen sticky top-0 min-w-max w-56 bg-white border hidden lg:block relative">
-      <Link to="/" className="h-16 flex items-center justify-center">
-        <h1>LOGO</h1>
+    <aside className="h-screen sticky top-0 min-w-max w-72 bg-white hidden lg:block relative">
+      <Link to="/" className="h-16 flex bg-blue-900 items-center justify-center">
+        <h1 className="border rounded-lg p-2 text-white ">KUBEX</h1>
       </Link>
-      <ul className="flex flex-col py-4 mt-6 h-screen overflow-y-auto">
-        <SidebarItem
-          icon={<FaUserShield />}
-          label={t('users')}
-          permissions={['view_users', 'view_roles']}
-          exact>
+      <ul className="flex flex-col py-4 h-screen overflow-y-auto">
+        <SidebarItem icon={<FaUserShield />} label="Users" exact>
           <SidebarSubItem
             icon={<FaUsers />}
             label={t('users')}
             link="/users"
             permission="view_users"
-          />
-          <SidebarSubItem
-            icon={<FaUsersCog />}
-            label={t('roles')}
-            link="/roles"
-            permission="view_roles"
           />
         </SidebarItem>
         <div className="py-10" />

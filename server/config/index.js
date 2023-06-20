@@ -9,10 +9,10 @@ const config = {
         port: process.env.PORT || 3000,
 
         db: {
-            host: process.env.DB_HOST || 'localhost',
+            host: process.env.DB_HOST || 'postgres',
             port: process.env.DB_PORT || 5432,
-            user: process.env.DB_USER || 'kubex',
-            pass: process.env.DB_PASS || 'devi12311',
+            user: process.env.DB_USER || 'root',
+            pass: process.env.DB_PASS || 'D3345123Galsjd',
             name: process.env.DB_NAME || 'kubex'
         },
         auth: {

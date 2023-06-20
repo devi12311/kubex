@@ -7,8 +7,8 @@ const Header = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white">
-      <div className="relative items-center h-16 lg:h-20 shadow flex">
+    <nav className="bg-blue-900">
+      <div className="relative items-center h-14 lg:h-16 shadow flex">
         <div className="hidden lg:flex w-full justify-end">
           <div className="flex mr-6">
             <UserDropdown />

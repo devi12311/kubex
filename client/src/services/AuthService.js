@@ -2,8 +2,15 @@ import GuestAPI from '@utils/plugins/GuestAPI';
 import API from '@utils/plugins/API';
 
 const AuthService = {
+  register: (username, password, email) => {
+    return GuestAPI.post('/auth/register', {
+      username,
+      password,
+      email
+    });
+  },
   login: (username, password) => {
-    return GuestAPI.post('login', {
+    return GuestAPI.post('/auth/login', {
       username,
       password
     });

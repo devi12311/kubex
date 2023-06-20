@@ -15,15 +15,15 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState();
 
   const onSubmit = (e) => {
-    if ((!username, !password, !confirmPassword)) {
+    if ((!username, !password, !email)) {
       showError('Please enter your data');
     }
     e.preventDefault();
     dispatch(showSpinner('Please wait'));
-    AuthService.login(username, password)
+    AuthService.register(username, password, email)
       .then(async (response) => {
         const authentication = _.get(response, 'data.data.authentication', '');
         const user = _.get(response, 'data.data.user', '');
@@ -42,7 +42,7 @@ const RegisterForm = () => {
   return (
     <div>
       <div>
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
+        <h2 className="text-center text-3xl font-extrabold text-gray-900">Sign up</h2>
       </div>
       <form className="mt-8 space-y-6" onSubmit={onSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -57,7 +57,7 @@ const RegisterForm = () => {
           <div className="relative">
             <div className="w-full mt-2">
               <PasswordInput
-                name="password"
+                name="Password"
                 label="Password"
                 placeholder="Password"
                 textSize="text-xs"
@@ -70,15 +70,13 @@ const RegisterForm = () => {
           </div>
           <div className="relative">
             <div className="w-full mt-2">
-              <PasswordInput
-                name="password"
-                label="Confirm password"
-                placeholder="Confirm password"
+              <Input
+                name="Email"
+                label="Email"
+                placeholder="Email"
                 textSize="text-xs"
-                value={password}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
+                value={email}
+                onChange={setEmail}
               />
             </div>
           </div>

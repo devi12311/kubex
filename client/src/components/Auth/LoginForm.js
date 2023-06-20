@@ -50,7 +50,7 @@ const LoginForm = () => {
           <Input
             label="Username"
             value={username}
-            placeholder={t('userName')}
+            placeholder="Username"
             className="rounded-b-none"
             onChange={setUsername}
             extraClasses="xs:text-sm md:text-lg"
