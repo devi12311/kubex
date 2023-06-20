@@ -1,5 +1,4 @@
-# Nebula React Starter
-
+Kubex
 > This project was bootstrapped with [CRACO (Create React App Configuration Override)](https://github.com/gsoft-inc/craco#readme).
 
 ## Tech stack

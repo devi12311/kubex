@@ -7,8 +7,6 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=D3345123Galsjd
       - POSTGRES_DB=kubex
-    ports:
-      - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
     networks:

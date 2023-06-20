@@ -6,6 +6,7 @@ import UsersPage from '@pages/UsersPage';
 import AuthRoute from '@router/AuthRoute';
 import RolesPage from '@pages/RolesPage';
 import HomePage from '@pages/HomePage';
+import RegisterPage from '@pages/RegisterPage';
 import { Routes } from 'react-router';
 
 const AppRoutes = () => {
@@ -14,6 +15,7 @@ const AppRoutes = () => {
       <Routes>
         <Route element={<GuestRoute />}>
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/register" element={<RegisterPage />} />
         </Route>
         <Route element={<AuthRoute />}>
           <Route exact path="/" element={<HomePage />} />

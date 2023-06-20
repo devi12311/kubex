@@ -9,28 +9,27 @@ import Input from '@core/inputs/Input';
 import _ from 'lodash';
 import DefaultButton from '@core/buttons/electrons/DefaultButton';
 import PasswordInput from '@core/inputs/PasswordInput';
-import { useTranslation } from 'react-i18next';
 
-const LoginForm = () => {
-  const { t } = useTranslation();
+const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
 
   const onSubmit = (e) => {
-    if ((!username, !password)) {
+    if ((!username, !password, !confirmPassword)) {
       showError('Please enter your data');
     }
     e.preventDefault();
-    dispatch(showSpinner(t('pleaseWait')));
+    dispatch(showSpinner('Please wait'));
     AuthService.login(username, password)
       .then(async (response) => {
         const authentication = _.get(response, 'data.data.authentication', '');
         const user = _.get(response, 'data.data.user', '');
         const permissions = _.get(response, 'data.data.permissions', []);
         dispatch(authenticate(authentication, user, permissions));
-        // navigate("/");
+        navigate('/login');
       })
       .catch((err) => {
         showError(err.response.data.message);
@@ -50,7 +49,7 @@ const LoginForm = () => {
           <Input
             label="Username"
             value={username}
-            placeholder={t('userName')}
+            placeholder="Username"
             className="rounded-b-none"
             onChange={setUsername}
             extraClasses="xs:text-sm md:text-lg"
@@ -69,10 +68,24 @@ const LoginForm = () => {
               />
             </div>
           </div>
+          <div className="relative">
+            <div className="w-full mt-2">
+              <PasswordInput
+                name="password"
+                label="Confirm password"
+                placeholder="Confirm password"
+                textSize="text-xs"
+                value={password}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
+              />
+            </div>
+          </div>
           <div
             className="text-sm text-indigo-600 cursor-pointer py-3"
-            onClick={() => navigate('/register')}>
-            Register here!
+            onClick={() => navigate('/login')}>
+            Login here!
           </div>
         </div>
         <DefaultButton md type="submit" label="Sign in" />
@@ -80,5 +93,4 @@ const LoginForm = () => {
     </div>
   );
 };
-
-export default LoginForm;
+export default RegisterForm;
