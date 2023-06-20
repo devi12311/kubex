@@ -18,6 +18,12 @@ module.exports = async (server, options) => {
                     email: Joi.string().trim().required(),
                 })
             },
+            pre: [
+                {
+                    assign: 'mapper',
+                    async method (request, h) { return server.app.resources.user.modelMapper }
+                }
+            ]
         },
         handler: Handlers.register
     });

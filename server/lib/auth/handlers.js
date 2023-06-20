@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 module.exports = {
     register: async function (request, h) {
         const { User } = request.server.app.models;
-        const { db } = request.server.app;
+        const { mapper } = request.pre;
         const {
             username,
             password,
@@ -22,20 +22,12 @@ module.exports = {
             }
 
             const user = await User.create({
-                username: username,
+                username,
                 password,
                 email
             })
 
-            const mappedUser = await db.transaction(async (t) => {
-                    user.username = username.trim();
-                    user.email = email.trim();
-                    user.password = password;
-                    await User.create(user,{ transaction: t });
-                return user;
-            });
-
-            return { ...mappedUser };
+            return mapper(user)
         } catch (err) {
             request.log(['auth', 'register', 'complete'], err, request);
             return Boom.badImplementation(err);
