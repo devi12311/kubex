@@ -21,20 +21,20 @@ const UsersIndex = () => {
     () => [
       {
         id: 'name',
-        name: t('name'),
+        name: 'Name',
         cell: (row) => row.name,
         sortable: true
       },
       {
         id: 'username',
-        name: t('userName'),
+        name: 'Username',
         cell: (row) => row.username,
         sortable: true,
         minWidth: '300px'
       },
       {
         id: 'status',
-        name: t('status'),
+        name: 'Status',
         cell: (row) =>
           row.is_active ? <GreenBadge text="Active" /> : <RedBadge text="Inactive" />,
         sortable: true,
@@ -42,7 +42,7 @@ const UsersIndex = () => {
       },
       {
         id: 'actions',
-        name: t('actions'),
+        name: 'Status',
         cell: (row) => (
           <UserActions
             user={row}
@@ -54,7 +54,7 @@ const UsersIndex = () => {
         )
       }
     ],
-    [t]
+    []
   );
 
   const getData = (params) => {
@@ -68,8 +68,9 @@ const UsersIndex = () => {
 
   return (
     <div className="border bg-white rounded justify-between items-center mb-5 py-2">
+      Find all users here
       <div className="mx-3 my-5">
-        <label className="text-lg font-bold">{t('userList')}</label>
+        <label className="text-lg font-bold">User List</label>
         {canCreateUser && (
           <div className="flex w-1/2 sm:w-1/4 md:w-1/6 mt-3 mr-2">
             <CreateUser

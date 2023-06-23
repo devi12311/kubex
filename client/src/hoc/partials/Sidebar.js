@@ -13,13 +13,8 @@ const Sidebar = () => {
         <h1 className="border rounded-lg p-2 text-white ">KUBEX</h1>
       </Link>
       <ul className="flex flex-col py-4 h-screen overflow-y-auto">
-        <SidebarItem icon={<FaUserShield />} label="Users" exact>
-          <SidebarSubItem
-            icon={<FaUsers />}
-            label={t('users')}
-            link="/users"
-            permission="view_users"
-          />
+        <SidebarItem icon={<FaUserShield />} label="Users" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <div className="py-10" />
       </ul>
