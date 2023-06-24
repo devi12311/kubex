@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
 import PodActions from '@components/Pod/partials/PodActions';
 import MobileTable from '@core/table/MobileTable';
@@ -6,7 +6,7 @@ import PodService from '@services/PodService';
 import GreenBadge from '@core/badges/GreenBadge';
 import RedBadge from '@core/badges/RedBadge';
 
-const PodIndex = () => {
+const PodIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -56,20 +56,31 @@ const PodIndex = () => {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <PodActions pod={row} onDeleted={() => setUpdatedTable((prev) => prev + 1)} />
+          <PodActions
+            pod={row}
+            namespace={namespace}
+            onDeleted={() => setUpdatedTable((prev) => prev + 1)}
+          />
         )
       }
     ],
-    []
+    [namespace]
   );
 
-  const getData = (params) => {
-    setLoading(true);
-    PodService.all(params).then((response) => {
-      setData(response.data);
-      setLoading(false);
-    });
-  };
+  const getData = useCallback(
+    (params) => {
+      setLoading(true);
+      PodService.all(namespace, params).then((response) => {
+        setData(response.data);
+        setLoading(false);
+      });
+    },
+    [namespace]
+  );
+
+  useEffect(() => {
+    getData(namespace);
+  }, [namespace, getData]);
 
   return (
     <div className="border bg-white rounded justify-between items-center mb-5 py-2">

@@ -1,15 +1,15 @@
 import API from '@utils/plugins/API';
-import { orgClusterPath } from '@utils/helpers';
+import { orgClusterPathNamespace } from '@utils/helpers';
 
 const PodService = {
-  all: (params) => {
-    return API.get(`${orgClusterPath}/pods`, { params });
+  all: (namespace) => {
+    return API.get(`${orgClusterPathNamespace}/${namespace}/pods`);
   },
-  find: (id) => {
-    return API.get(`users/${id}`);
+  find: (namespace, id) => {
+    return API.get(`${orgClusterPathNamespace}/${namespace}/pods/${id}`);
   },
-  destroy: (id) => {
-    return API.delete(`${orgClusterPath}/pods/${id}`);
+  destroy: (namespace, id) => {
+    return API.delete(`${orgClusterPathNamespace}/${namespace}/pods/${id}`);
   }
 };
 

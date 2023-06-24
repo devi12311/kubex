@@ -5,7 +5,7 @@ import DeleteButton from '@core/buttons/atoms/DeleteButton';
 import { useTranslation } from 'react-i18next';
 import useHasPermission from '@hooks/useHasPermission';
 
-const DeleteEntity = ({ service, id, onDeleted }) => {
+const DeleteEntity = ({ service, id, onDeleted, namespace }) => {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -14,7 +14,7 @@ const DeleteEntity = ({ service, id, onDeleted }) => {
 
   const onSubmit = () => {
     service
-      .destroy(id)
+      .destroy(namespace, id)
       .then(() => {
         showSuccess('Deleted successfully');
         onDeleted();

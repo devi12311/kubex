@@ -39,3 +39,5 @@ export const wait = (ms = 1000) => {
 
 export const orgClusterPath =
   'organizations/72290092-3ade-4ed3-9648-7b9a96ab8afb/clusters/6c2a8630-9c66-4c4b-a983-298161cef268/namespaces/default';
+export const orgClusterPathNamespace =
+  'organizations/72290092-3ade-4ed3-9648-7b9a96ab8afb/clusters/6c2a8630-9c66-4c4b-a983-298161cef268/namespaces';

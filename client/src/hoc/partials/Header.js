@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import MobileMenu from '@hoc/partials/MobileMenu';
 import UserDropdown from '@components/User/partials/UserDropdown';
+import NamespacesDropdown from '@components/Namespaces/NamespacesDropDown';
 
-const Header = () => {
+const Header = ({ namespaces, onSelected, selectedNamespace }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <nav className="bg-blue-900">
       <div className="relative items-center h-14 lg:h-16 shadow flex">
-        <div className="hidden lg:flex w-full justify-end">
+        <div className="hidden lg:flex w-full justify-between">
+          <div className="flex mr-6 ">
+            <NamespacesDropdown
+              namespaces={namespaces}
+              onSelected={onSelected}
+              selectedNamespace={selectedNamespace}
+            />
+          </div>
           <div className="flex mr-6">
             <UserDropdown />
           </div>

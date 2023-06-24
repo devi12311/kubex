@@ -1,73 +1,86 @@
 import React from 'react';
 import Layout from '@hoc/layouts/Layout';
 import Chart from 'react-apexcharts';
+import { FaCircle } from 'react-icons/fa';
 
 const HomePage = () => {
-  const optionsorder = {
+  const style = {
+    series: [76],
     chart: {
-      id: 'donut-chart'
-    },
-    dataLabels: {
-      enabled: false
-    },
-    grid: {
-      padding: {
-        left: 0,
-        right: 0
+      type: 'radialBar',
+      offsetY: -20,
+      sparkline: {
+        enabled: true
       }
     },
     plotOptions: {
-      pie: {
-        donut: {
-          size: '70px',
-          labels: {
-            show: true,
-
-            total: {
-              show: true,
-              label: 'Orders',
-              color: '#99abb4'
-            }
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        track: {
+          background: '#e7e7e7',
+          strokeWidth: '97%',
+          margin: 5, // margin is in pixels
+          dropShadow: {
+            enabled: true,
+            top: 2,
+            left: 0,
+            color: '#999',
+            opacity: 1,
+            blur: 2
+          }
+        },
+        dataLabels: {
+          name: {
+            show: false
+          },
+          value: {
+            offsetY: -2,
+            fontSize: '22px'
           }
         }
       }
     },
-    labels: ['Success', 'Failed ', 'Pending'],
-    stroke: {
-      width: 0
+    grid: {
+      padding: {
+        top: -10
+      }
     },
-    legend: {
-      show: false
-    },
-    colors: ['rgb(64, 196, 255)', 'rgb(255, 130, 28)', 'rgb(41, 97, 255)'],
-    tooltip: {
-      fillSeriesColor: false
-    }
+    fill: {},
+    labels: ['Average Results']
   };
-  const seriesorder = [65, 15, 17];
+
+  const seriesorder = [65];
   return (
     <Layout>
-      <div className="status mt-4">
-        <Chart options={optionsorder} series={seriesorder} type="donut" height="250" />
+      <div className="status mt-4 flex flex-row justify-center mx-auto pt-12 space-x-20">
+        <div className="flex flex-col justify-center">
+          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <span className="text-center font-bold text-lg pt-5">CPU</span>
+        </div>
+        <div className="flex flex-col justify-center">
+          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <span className="text-center font-bold text-lg pt-5">RAM</span>
+        </div>
+        <div className="flex flex-col justify-center">
+          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <span className="text-center font-bold text-lg pt-5">Pods</span>
+        </div>
       </div>
-      <div>
-        {/* <div className="flex flex-row ">
-          <div className=" flex flex-col xs-4">
-            <i className="fa fa-circle text-primary" />
-            <h3 className="mb-0 font-medium">5489</h3>
-            <span>Success</span>
+      <div className="pt-20 ml-20 grid grid-cols-3">
+        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((el) => (
+          <div className="mb-10 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 w-100">
+            <div className="mx-5">
+              <FaCircle className=" text-blue-900 text-5xl" />
+            </div>
+            <div className="flex flex-col justify-between p-4 leading-normal">
+              <h5 className="my-2 text-2xl font-bold tracking-tight">144</h5>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                Here are the biggest enterprise technology
+              </p>
+            </div>
           </div>
-          <div className=" flex flex-col xs-4">
-            <i className="fa fa-circle text-info" />
-            <h3 className="mb-0 font-medium">954</h3>
-            <span>Pending</span>
-          </div>
-          <div className="flex flex-col xs-4">
-            <i className="fa fa-circle text-orange" />
-            <h3 className="mb-0 font-medium">736</h3>
-            <span>Failed</span>
-          </div>
-        </div> */}
+        ))}
       </div>
     </Layout>
   );
