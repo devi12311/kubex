@@ -1,4 +1,4 @@
-# PaperClicks assignment
+# KubeX
 
 
 ## Installation
