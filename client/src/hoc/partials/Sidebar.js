@@ -21,10 +21,10 @@ const Sidebar = () => {
         <SidebarItem label="Services" link="/services">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Ingresses" link="/users">
+        <SidebarItem label="Ingresses" link="/ingresses">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="ConfigMaps" link="/users">
+        <SidebarItem label="ConfigMaps" link="/configmaps">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <SidebarItem label="Secrets" link="/users">

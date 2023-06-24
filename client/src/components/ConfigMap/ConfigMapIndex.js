@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
 import MobileTable from '@core/table/MobileTable';
-import ServiceService from '@services/ServiceService';
-import ServiceActions from '@components/Service/partials/ServiceActions';
+import ConfigMapService from '@services/ConfigMapService';
+import ConfigMapActions from '@components/ConfigMap/partials/ConfigMapActions';
 
-const ServiceIndex = ({ namespace = 'default' }) => {
+const ConfigMapIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -18,16 +18,9 @@ const ServiceIndex = ({ namespace = 'default' }) => {
         sortable: true
       },
       {
-        id: 'Cluster IP',
-        name: 'Cluster IP',
-        cell: (row) => row.spec.clusterIP,
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
-        id: 'IP Family',
-        name: 'IP Family',
-        cell: (row) => row.spec.ipFamilies.join(','),
+        id: 'Immutable',
+        name: 'Immutable',
+        cell: (row) => row.immutable,
         sortable: true,
         minWidth: '300px'
       },
@@ -39,18 +32,11 @@ const ServiceIndex = ({ namespace = 'default' }) => {
         minWidth: '300px'
       },
       {
-        id: 'type',
-        name: 'Type',
-        cell: (row) => row.spec.type,
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <ServiceActions
-            service={row}
+          <ConfigMapActions
+            configmap={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -63,7 +49,7 @@ const ServiceIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      ServiceService.all(namespace, params).then((response) => {
+      ConfigMapService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -96,4 +82,4 @@ const ServiceIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default ServiceIndex;
+export default ConfigMapIndex;

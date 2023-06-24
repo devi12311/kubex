@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
 import MobileTable from '@core/table/MobileTable';
-import ServiceService from '@services/ServiceService';
+import IngressService from '@services/IngressService';
 import ServiceActions from '@components/Service/partials/ServiceActions';
+import IngressActions from '@components/Ingress/partials/IngressActions';
 
-const ServiceIndex = ({ namespace = 'default' }) => {
+const IngressIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -18,20 +19,6 @@ const ServiceIndex = ({ namespace = 'default' }) => {
         sortable: true
       },
       {
-        id: 'Cluster IP',
-        name: 'Cluster IP',
-        cell: (row) => row.spec.clusterIP,
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
-        id: 'IP Family',
-        name: 'IP Family',
-        cell: (row) => row.spec.ipFamilies.join(','),
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
         id: 'createdAt',
         name: 'Created At',
         cell: (row) => row.metadata.creationTimestamp,
@@ -39,18 +26,11 @@ const ServiceIndex = ({ namespace = 'default' }) => {
         minWidth: '300px'
       },
       {
-        id: 'type',
-        name: 'Type',
-        cell: (row) => row.spec.type,
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <ServiceActions
-            service={row}
+          <IngressActions
+            ingress={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -63,7 +43,7 @@ const ServiceIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      ServiceService.all(namespace, params).then((response) => {
+      IngressService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -96,4 +76,4 @@ const ServiceIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default ServiceIndex;
+export default IngressIndex;

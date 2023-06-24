@@ -12,6 +12,8 @@ import PodsPage from '@pages/PodsPage';
 import DeploymentsPage from '@pages/DeploymentsPage';
 import StatefulSetPage from '@pages/StatefulSetPage';
 import ServicesPage from '@pages/ServicesPage';
+import IngressesPage from '@pages/IngressesPage';
+import ConfigMapsPage from '@pages/ConfigMapsPage';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +26,8 @@ const AppRoutes = () => {
           <Route exact path="/deployments" element={<DeploymentsPage />} />
           <Route exact path="/stateful-sets" element={<StatefulSetPage />} />
           <Route exact path="/services" element={<ServicesPage />} />
+          <Route exact path="/ingresses" element={<IngressesPage />} />
+          <Route exact path="/configmaps" element={<ConfigMapsPage />} />
           <Route exact path="/" element={<HomePage />} />
         </Route>
         <Route element={<AuthRoute />}>
