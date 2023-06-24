@@ -12,7 +12,7 @@ const Sidebar = () => {
         <SidebarItem label="Pods" link="/pods">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Deployments" link="/users">
+        <SidebarItem label="Deployments" link="/deployments">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <SidebarItem label="StatefulSets" link="/users">

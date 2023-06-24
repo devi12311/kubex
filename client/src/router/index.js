@@ -9,6 +9,7 @@ import HomePage from '@pages/HomePage';
 import RegisterPage from '@pages/RegisterPage';
 import { Routes } from 'react-router';
 import PodsPage from '@pages/PodsPage';
+import DeploymentsPage from '@pages/DeploymentsPage';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
           <Route exact path="/pods" element={<PodsPage />} />
+          <Route exact path="/deployments" element={<DeploymentsPage />} />
           <Route exact path="/" element={<HomePage />} />
         </Route>
         <Route element={<AuthRoute />}>
