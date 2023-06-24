@@ -15,7 +15,7 @@ const Sidebar = () => {
         <SidebarItem label="Deployments" link="/deployments">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="StatefulSets" link="/users">
+        <SidebarItem label="StatefulSets" link="/stateful-sets">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <SidebarItem label="Services" link="/users">

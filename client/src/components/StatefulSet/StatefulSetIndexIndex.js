@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
-import PodActions from '@components/Pod/partials/PodActions';
 import MobileTable from '@core/table/MobileTable';
-import DeploymentService from '@services/DeploymentService';
+import StatefulSetService from '@services/StatefulSetService';
 import GreenBadge from '@core/badges/GreenBadge';
 import RedBadge from '@core/badges/RedBadge';
 import OrangeBadge from '@core/badges/OrangeBadge';
 import StatefulSetActions from '@components/StatefulSet/partials/StatefulSetActions';
 
-const DeploymentIndex = ({ namespace = 'default' }) => {
+const StatefulSetIndexIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -51,7 +50,7 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
       {
         id: 'Strategy',
         name: 'Strategy',
-        cell: (row) => row.spec.strategy.type,
+        cell: (row) => row.spec.updateStrategy.type,
         sortable: true,
         minWidth: '300px'
       },
@@ -87,7 +86,7 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      DeploymentService.all(namespace, params).then((response) => {
+      StatefulSetService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -102,7 +101,7 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
   return (
     <div className="border bg-white rounded justify-between items-center mb-5 py-2">
       <div className="mx-3 my-5">
-        <label className="text-lg font-bold">Pods</label>
+        <label className="text-lg font-bold">Stateful Sets</label>
         <div className="block lg:hidden">
           <MobileTable headers={headers} data={data} />
         </div>
@@ -120,4 +119,4 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default DeploymentIndex;
+export default StatefulSetIndexIndex;
