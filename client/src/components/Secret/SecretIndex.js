@@ -3,8 +3,10 @@ import Datatable from '@core/table/Datatable';
 import MobileTable from '@core/table/MobileTable';
 import ConfigMapService from '@services/ConfigMapService';
 import ConfigMapActions from '@components/ConfigMap/partials/ConfigMapActions';
+import SecretService from '@services/SecretService';
+import SecretActions from '@components/Secret/partials/SecretActions';
 
-const ConfigMapIndex = ({ namespace = 'default' }) => {
+const SecretIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -35,8 +37,8 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <ConfigMapActions
-            configmap={row}
+          <SecretActions
+            secret={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -49,7 +51,7 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      ConfigMapService.all(namespace, params).then((response) => {
+      SecretService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -82,4 +84,4 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default ConfigMapIndex;
+export default SecretIndex;

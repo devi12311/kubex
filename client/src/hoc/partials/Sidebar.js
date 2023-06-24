@@ -27,10 +27,10 @@ const Sidebar = () => {
         <SidebarItem label="ConfigMaps" link="/configmaps">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Secrets" link="/users">
+        <SidebarItem label="Secrets" link="/secrets">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Persistent Volumes" link="/users">
+        <SidebarItem label="Persistent Volumes" link="/pv">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <SidebarItem label="Persistent Volume Claims" link="/users">

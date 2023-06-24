@@ -1,13 +1,28 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
 import MobileTable from '@core/table/MobileTable';
-import ConfigMapService from '@services/ConfigMapService';
+import PersistentVolumeService from '@services/PersistentVolumeService';
 import ConfigMapActions from '@components/ConfigMap/partials/ConfigMapActions';
+import PersistentVolumeActions from '@components/PersistentVolume/partials/PersistentVolumeActions';
+import GreenBadge from '@core/badges/GreenBadge';
+import RedBadge from '@core/badges/RedBadge';
+import OrangeBadge from '@core/badges/OrangeBadge';
 
-const ConfigMapIndex = ({ namespace = 'default' }) => {
+const PersistentVolumeIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
+
+  const badges = (status) => {
+    switch (status) {
+      case 'Available':
+        return <GreenBadge text="Available" />;
+      case 'Bound':
+        return <OrangeBadge text="Bound" />;
+      default:
+        return <RedBadge text="Unavailable" />;
+    }
+  };
 
   const headers = useMemo(
     () => [
@@ -18,9 +33,22 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
         sortable: true
       },
       {
-        id: 'Immutable',
-        name: 'Immutable',
-        cell: (row) => (row.immutable ? 'True' : 'False'),
+        id: 'Storage Class Name',
+        name: 'Storage Class Name',
+        cell: (row) => row.spec.storageClassName,
+        sortable: true
+      },
+      {
+        id: 'ReclaimPolicy',
+        name: 'Reclaim Policy',
+        cell: (row) => row.spec.persistentVolumeReclaimPolicy,
+        sortable: true,
+        minWidth: '300px'
+      },
+      {
+        id: 'status',
+        name: 'Status',
+        cell: (row) => badges(row.status.phase),
         sortable: true,
         minWidth: '300px'
       },
@@ -35,8 +63,8 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <ConfigMapActions
-            configmap={row}
+          <PersistentVolumeActions
+            pv={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -49,7 +77,7 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      ConfigMapService.all(namespace, params).then((response) => {
+      PersistentVolumeService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -82,4 +110,4 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default ConfigMapIndex;
+export default PersistentVolumeIndex;

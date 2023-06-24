@@ -14,6 +14,8 @@ import StatefulSetPage from '@pages/StatefulSetPage';
 import ServicesPage from '@pages/ServicesPage';
 import IngressesPage from '@pages/IngressesPage';
 import ConfigMapsPage from '@pages/ConfigMapsPage';
+import SecretsPage from '@pages/SecretsPage';
+import PersistentVolumesPage from '@pages/PersistentVolumesPage';
 
 const AppRoutes = () => {
   return (
@@ -28,6 +30,8 @@ const AppRoutes = () => {
           <Route exact path="/services" element={<ServicesPage />} />
           <Route exact path="/ingresses" element={<IngressesPage />} />
           <Route exact path="/configmaps" element={<ConfigMapsPage />} />
+          <Route exact path="/secrets" element={<SecretsPage />} />
+          <Route exact path="/pv" element={<PersistentVolumesPage />} />
           <Route exact path="/" element={<HomePage />} />
         </Route>
         <Route element={<AuthRoute />}>
