@@ -1,7 +1,7 @@
 import React from 'react';
 import DeleteEntity from '@hoc/cruds/DeleteEntity';
-import ConfigMapService from '@services/ConfigMapService';
 import ShowPersistentVolume from '@components/PersistentVolume/ShowPersistentVolume';
+import PersistentVolumeService from '@services/PersistentVolumeService';
 
 const PersistentVolumeActions = ({ pv, onDeleted, namespace }) => {
   return (
@@ -10,7 +10,7 @@ const PersistentVolumeActions = ({ pv, onDeleted, namespace }) => {
         <ShowPersistentVolume pv={pv} namespace={namespace} />
       </div>
       <DeleteEntity
-        service={ConfigMapService}
+        service={PersistentVolumeService}
         id={pv.metadata.name}
         onDeleted={onDeleted}
         namespace={namespace}

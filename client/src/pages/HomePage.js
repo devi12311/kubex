@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Layout from '@hoc/layouts/Layout';
 import Chart from 'react-apexcharts';
 import { FaCircle } from 'react-icons/fa';
+import PodService from '@services/PodService';
 
 const HomePage = () => {
   const style = {
@@ -50,34 +51,65 @@ const HomePage = () => {
     labels: ['Average Results']
   };
 
-  const seriesorder = [65];
+  const workloads = [
+    {
+      label: 'Workloads',
+      number: 56
+    },
+    {
+      label: 'Namespaces',
+      number: 12
+    },
+    {
+      label: 'Pods',
+      number: 78
+    },
+    {
+      label: 'Persistent Volumes',
+      number: 12
+    },
+    {
+      label: 'Deployments',
+      number: 14
+    },
+    {
+      label: 'Stateful Sets',
+      number: 4
+    },
+    {
+      label: 'Persistent Volume Claims',
+      number: 12
+    }
+  ];
+
+  const cpu = [48, 52];
+  const ram = [64, 36];
+  const pods = [86, 12];
   return (
     <Layout>
       <div className="status mt-4 flex flex-row justify-center mx-auto pt-12 space-x-20">
         <div className="flex flex-col justify-center">
-          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <Chart options={style} series={cpu} type="radialBar" height="350" />
           <span className="text-center font-bold text-lg pt-5">CPU</span>
         </div>
         <div className="flex flex-col justify-center">
-          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <Chart options={style} series={ram} type="radialBar" height="350" />
           <span className="text-center font-bold text-lg pt-5">RAM</span>
         </div>
         <div className="flex flex-col justify-center">
-          <Chart options={style} series={seriesorder} type="radialBar" height="350" />
+          <Chart options={style} series={pods} type="radialBar" height="350" />
           <span className="text-center font-bold text-lg pt-5">Pods</span>
         </div>
       </div>
       <div className="pt-20 ml-20 grid grid-cols-3">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((el) => (
+        {workloads.map((el) => (
           <div className="mb-10 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 w-100">
             <div className="mx-5">
               <FaCircle className=" text-blue-900 text-5xl" />
             </div>
             <div className="flex flex-col justify-between p-4 leading-normal">
-              <h5 className="my-2 text-2xl font-bold tracking-tight">144</h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology
-              </p>
+              <h5 className="my-2 text-2xl font-bold tracking-tight">{el.number}</h5>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{el.label}</p>
             </div>
           </div>
         ))}

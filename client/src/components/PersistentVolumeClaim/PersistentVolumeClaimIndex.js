@@ -1,14 +1,28 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
 import MobileTable from '@core/table/MobileTable';
-import IngressService from '@services/IngressService';
-import ServiceActions from '@components/Service/partials/ServiceActions';
-import IngressActions from '@components/Ingress/partials/IngressActions';
+import PersistentVolumeService from '@services/PersistentVolumeService';
+import GreenBadge from '@core/badges/GreenBadge';
+import RedBadge from '@core/badges/RedBadge';
+import OrangeBadge from '@core/badges/OrangeBadge';
+import PersistentVolumeClaimActions from '@components/PersistentVolumeClaim/partials/PersistentVolumeClaimActions';
+import PersistentVolumeClaimService from '@services/PersistentVolumeClaimService';
 
-const IngressIndex = ({ namespace = 'default' }) => {
+const PersistentVolumeClaimIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
+
+  const badges = (status) => {
+    switch (status) {
+      case 'Available':
+        return <GreenBadge text="Available" />;
+      case 'Pending':
+        return <OrangeBadge text="Pending" />;
+      default:
+        return <RedBadge text="Unavailable" />;
+    }
+  };
 
   const headers = useMemo(
     () => [
@@ -17,6 +31,26 @@ const IngressIndex = ({ namespace = 'default' }) => {
         name: 'Name',
         cell: (row) => row.metadata.name,
         sortable: true
+      },
+      {
+        id: 'Storage Class Name',
+        name: 'Storage Class Name',
+        cell: (row) => row.spec.storageClassName,
+        sortable: true
+      },
+      {
+        id: 'ReclaimPolicy',
+        name: 'Reclaim Policy',
+        cell: (row) => row.spec.persistentVolumeReclaimPolicy,
+        sortable: true,
+        minWidth: '300px'
+      },
+      {
+        id: 'status',
+        name: 'Status',
+        cell: (row) => badges(row.status.phase),
+        sortable: true,
+        minWidth: '300px'
       },
       {
         id: 'createdAt',
@@ -29,8 +63,8 @@ const IngressIndex = ({ namespace = 'default' }) => {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <IngressActions
-            ingress={row}
+          <PersistentVolumeClaimActions
+            pvc={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -43,7 +77,7 @@ const IngressIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      IngressService.all(namespace, params).then((response) => {
+      PersistentVolumeClaimService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -58,7 +92,7 @@ const IngressIndex = ({ namespace = 'default' }) => {
   return (
     <div className="border bg-white rounded justify-between items-center mb-5 py-2">
       <div className="mx-3 my-5">
-        <label className="text-lg font-bold">Ingresses</label>
+        <label className="text-lg font-bold">Persistent Volume Claims</label>
         <div className="block lg:hidden">
           <MobileTable headers={headers} data={data} />
         </div>
@@ -76,4 +110,4 @@ const IngressIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default IngressIndex;
+export default PersistentVolumeClaimIndex;

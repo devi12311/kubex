@@ -33,10 +33,10 @@ const Sidebar = () => {
         <SidebarItem label="Persistent Volumes" link="/pv">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Persistent Volume Claims" link="/users">
+        <SidebarItem label="Persistent Volume Claims" link="/pvc">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
-        <SidebarItem label="Nodes" link="/users">
+        <SidebarItem label="Nodes" link="/nodes">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <div className="py-10" />

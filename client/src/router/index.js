@@ -16,6 +16,8 @@ import IngressesPage from '@pages/IngressesPage';
 import ConfigMapsPage from '@pages/ConfigMapsPage';
 import SecretsPage from '@pages/SecretsPage';
 import PersistentVolumesPage from '@pages/PersistentVolumesPage';
+import PersistentVolumeClaimsPage from '@pages/PersistentVolumeClaimsPage';
+import NodesPage from '@pages/NodesPage';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +26,9 @@ const AppRoutes = () => {
         <Route element={<GuestRoute />}>
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
+        </Route>
+        <Route element={<AuthRoute />}>
+          <Route exact path="/" element={<HomePage />} />
           <Route exact path="/pods" element={<PodsPage />} />
           <Route exact path="/deployments" element={<DeploymentsPage />} />
           <Route exact path="/stateful-sets" element={<StatefulSetPage />} />
@@ -32,10 +37,8 @@ const AppRoutes = () => {
           <Route exact path="/configmaps" element={<ConfigMapsPage />} />
           <Route exact path="/secrets" element={<SecretsPage />} />
           <Route exact path="/pv" element={<PersistentVolumesPage />} />
-          <Route exact path="/" element={<HomePage />} />
-        </Route>
-        <Route element={<AuthRoute />}>
-          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/pvc" element={<PersistentVolumeClaimsPage />} />
+          <Route exact path="/nodes" element={<NodesPage />} />
           <Route exact path="/roles" element={<RolesPage />} />
         </Route>
       </Routes>

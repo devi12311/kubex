@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@hoc/layouts/Layout';
 import NamespaceService from '@services/NamespaceService';
-import PersistentVolumeIndex from '@components/PersistentVolume/PersistentVolumeIndex';
+import NodeIndex from '@components/Node/NodeIndex';
 
-const PersistentVolumePage = () => {
+const NodesPage = () => {
   const [namespaces, setNamespaces] = useState([]);
   const [selectedNamespace, setSelectedNamespace] = useState();
 
@@ -18,9 +18,9 @@ const PersistentVolumePage = () => {
       namespaces={namespaces}
       onSelected={setSelectedNamespace}
       selectedNamespace={selectedNamespace}>
-      <PersistentVolumeIndex namespace={selectedNamespace} />
+      <NodeIndex namespace={selectedNamespace} />
     </Layout>
   );
 };
 
-export default PersistentVolumePage;
+export default NodesPage;

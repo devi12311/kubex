@@ -64,7 +64,7 @@ const ConfigMapIndex = ({ namespace = 'default' }) => {
   return (
     <div className="border bg-white rounded justify-between items-center mb-5 py-2">
       <div className="mx-3 my-5">
-        <label className="text-lg font-bold">Pods</label>
+        <label className="text-lg font-bold">Config Maps</label>
         <div className="block lg:hidden">
           <MobileTable headers={headers} data={data} />
         </div>

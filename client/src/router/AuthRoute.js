@@ -5,7 +5,7 @@ import { Navigate, Outlet } from 'react-router';
 
 const AuthRoute = () => {
   const accessToken = useSelector((state) =>
-    _.get(state, 'authenticationReducer.access_token', null)
+    _.get(state, 'authenticationReducer.accessToken', null)
   );
 
   if (!accessToken) {
