@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Datatable from '@core/table/Datatable';
-import PodActions from '@components/Pod/partials/PodActions';
 import MobileTable from '@core/table/MobileTable';
-import DeploymentService from '@services/DeploymentService';
+import ServiceService from '@services/ServiceService';
 import GreenBadge from '@core/badges/GreenBadge';
 import RedBadge from '@core/badges/RedBadge';
 import OrangeBadge from '@core/badges/OrangeBadge';
-import DeploymentActions from '@components/Deployment/partials/DeploymentActions';
+import ServiceActions from '@components/Service/partials/ServiceActions';
 
-const DeploymentIndex = ({ namespace = 'default' }) => {
+const ServiceIndex = ({ namespace = 'default' }) => {
   const [loading, setLoading] = useState(true);
   const [updatedTable, setUpdatedTable] = useState(0);
   const [data, setData] = useState([]);
@@ -35,32 +34,18 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
         sortable: true
       },
       {
-        id: 'Replicas',
-        name: 'Replicas',
-        cell: (row) => (row.status.availableReplicas ? row.status.availableReplicas : 0),
+        id: 'Cluster IP',
+        name: 'Cluster IP',
+        cell: (row) => row.spec.clusterIP,
         sortable: true,
         minWidth: '300px'
       },
       {
-        id: 'Desired Replicas',
-        name: 'Desired Replicas',
-        cell: (row) => row.spec.replicas,
+        id: 'IP Family',
+        name: 'IP Family',
+        cell: (row) => row.spec.ipFamilies.join(','),
         sortable: true,
         minWidth: '300px'
-      },
-      {
-        id: 'Strategy',
-        name: 'Strategy',
-        cell: (row) => row.spec.strategy.type,
-        sortable: true,
-        minWidth: '300px'
-      },
-      {
-        id: 'status',
-        name: 'Status',
-        cell: (row) => badges(row.status.replicas, row.status.availableReplicas),
-        sortable: true,
-        width: '100px'
       },
       {
         id: 'createdAt',
@@ -70,11 +55,18 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
         minWidth: '300px'
       },
       {
+        id: 'type',
+        name: 'Type',
+        cell: (row) => row.spec.type,
+        sortable: true,
+        minWidth: '300px'
+      },
+      {
         id: 'actions',
         name: 'Actions',
         cell: (row) => (
-          <DeploymentActions
-            deployment={row}
+          <ServiceActions
+            service={row}
             namespace={namespace}
             onDeleted={() => setUpdatedTable((prev) => prev + 1)}
           />
@@ -87,7 +79,7 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
   const getData = useCallback(
     (params) => {
       setLoading(true);
-      DeploymentService.all(namespace, params).then((response) => {
+      ServiceService.all(namespace, params).then((response) => {
         setData(response.data);
         setLoading(false);
       });
@@ -120,4 +112,4 @@ const DeploymentIndex = ({ namespace = 'default' }) => {
   );
 };
 
-export default DeploymentIndex;
+export default ServiceIndex;
