@@ -2,6 +2,7 @@ import React from 'react';
 import { FaUsers, FaUsersCog, FaUserShield } from 'react-icons/fa';
 import SidebarItem from '@core/items/SidebarItem';
 import SidebarSubItem from '@core/items/SidebarSubItem';
+
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +14,37 @@ const Sidebar = () => {
         <h1 className="border rounded-lg p-2 text-white ">KUBEX</h1>
       </Link>
       <ul className="flex flex-col py-4 h-screen overflow-y-auto">
-        <SidebarItem icon={<FaUserShield />} label="Users" link="/users">
+        <SidebarItem label="Users" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Pods" link="/pods">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Deployments" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="StatefulSets" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Services" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Ingresses" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="ConfigMaps" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Secrets" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Persistent Volumes" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Persistent Volume Claims" link="/users">
+          {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
+        </SidebarItem>
+        <SidebarItem label="Nodes" link="/users">
           {/* <SidebarSubItem icon={<FaUsers />} label="User" link="/users" /> */}
         </SidebarItem>
         <div className="py-10" />

@@ -5,9 +5,7 @@ import DeleteButton from '@core/buttons/atoms/DeleteButton';
 import { useTranslation } from 'react-i18next';
 import useHasPermission from '@hooks/useHasPermission';
 
-const DeleteEntity = ({ service, id, onDeleted, permission }) => {
-  const canAccess = useHasPermission(permission);
-  const { t } = useTranslation();
+const DeleteEntity = ({ service, id, onDeleted }) => {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -18,7 +16,7 @@ const DeleteEntity = ({ service, id, onDeleted, permission }) => {
     service
       .destroy(id)
       .then(() => {
-        showSuccess(t('deletedSuccessfully'));
+        showSuccess('Deleted successfully');
         onDeleted();
         closeModal();
       })
@@ -26,19 +24,16 @@ const DeleteEntity = ({ service, id, onDeleted, permission }) => {
         showError(err.response.data.message);
       });
   };
-  if (!canAccess) {
-    return null;
-  }
   return (
     <div>
       <DeleteButton onClick={() => setShowModal(true)} />
       <DeleteModal
         show={showModal}
-        title={`${t('areYouSure')}`}
+        title="Are you sure u wanna delete this"
         onClose={closeModal}
         onSubmit={onSubmit}>
         <div className="text-lg my-3 ml-5">
-          <span>{t('areYouSureYouWantToDeleteThisEntity')}</span>
+          <span> Are you sure u wanna delete </span>
         </div>
       </DeleteModal>
     </div>

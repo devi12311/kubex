@@ -4,18 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { logout } from '@redux/authentication/Action';
+import {useNavigate} from "react-router-dom";
 
 const UserDropdown = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   // eslint-disable-next-line no-undef
   const name = useSelector((state) => _.get(state, 'meReducer.name', ''));
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/login');
   };
 
   return (

@@ -34,26 +34,16 @@ const ToggleUser = ({ user, onToggle }) => {
   };
 
   return (
-    <PermissionHandler permission="toggle_users_state">
-      {user.is_active ? (
-        <DefaultButton
-          bgColor="bg-red-100"
-          sm
-          bgColorHover="hover:bg-red-300"
-          textColor="text-red-700"
-          onClick={() => setShowModal(true)}
-          label={<FaTimes />}
-        />
-      ) : (
-        <DefaultButton
-          bgColor="bg-emerald-100"
-          sm
-          bgColorHover="hover:bg-emerald-200"
-          textColor="text-emerald-700"
-          onClick={() => setShowModal(true)}
-          label={<FaCheck />}
-        />
-      )}
+    <>
+      {' '}
+      <DefaultButton
+        bgColor="bg-emerald-100"
+        sm
+        bgColorHover="hover:bg-emerald-200"
+        textColor="text-emerald-700"
+        onClick={() => setShowModal(true)}
+        label={<FaCheck />}
+      />
       <ToggleModal
         title={`${user.is_active ? t('deactivateUser') : t('activateUser')}`}
         show={showModal}
@@ -69,7 +59,7 @@ const ToggleUser = ({ user, onToggle }) => {
           }`}</span>
         </div>
       </ToggleModal>
-    </PermissionHandler>
+    </>
   );
 };
 export default ToggleUser;

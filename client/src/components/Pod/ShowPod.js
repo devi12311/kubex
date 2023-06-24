@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ViewModal from '@core/modals/ViewModal';
 import ViewButton from '@core/buttons/atoms/ViewButton';
-import UserService from '@services/UserService';
+import PodService from '@services/PodService';
 import RowDetails from '@hoc/cruds/RowDetails';
-import { useTranslation } from 'react-i18next';
 import PermissionHandler from '@hoc/cruds/PermissionHandler';
 
-const ShowUser = ({ user }) => {
-  const { t } = useTranslation();
+const ShowPod = ({ pod }) => {
   const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState([]);
 
@@ -16,22 +14,22 @@ const ShowUser = ({ user }) => {
   };
   useEffect(() => {
     if (showModal)
-      UserService.find(user.id).then((response) => {
+      PodService.find(pod.name).then((response) => {
         setUserData(response.data.data);
       });
-  }, [user.id, showModal]);
+  }, [pod.name, showModal]);
 
   return (
     <>
       <ViewButton onClick={() => setShowModal(true)} />
-      <ViewModal show={showModal} title={`${t('overview')}`} onClose={closeModal}>
+      <ViewModal show={showModal} title="ajshd" onClose={closeModal}>
         <div className="flex flex-col mt-5">
-          <RowDetails label={t('name')} value={userData.name} />
-          <RowDetails label={t('userName')} value={userData.username} />
+          <RowDetails label="" value={userData.name} />
+          <RowDetails label="" value={userData.username} />
         </div>
       </ViewModal>
     </>
   );
 };
 
-export default ShowUser;
+export default ShowPod;

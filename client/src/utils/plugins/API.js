@@ -33,7 +33,7 @@ const processFailedRequests = (error, accessToken) => {
 
 const getAuth = () => {
   const state = store.getState();
-  const accessToken = _.get(state, 'authenticationReducer.access_token', null);
+  const accessToken = _.get(state, 'authenticationReducer.accessToken', null);
   if (!accessToken) {
     return null;
   }
@@ -47,7 +47,6 @@ API.interceptors.request.use(
     if (authentication) {
       config.headers.Authorization = authentication;
     }
-    config.headers.locale = localStorage.getItem('SysWebLang');
     return config;
   },
   async () => {

@@ -26,11 +26,12 @@ const LoginForm = () => {
     dispatch(showSpinner(t('pleaseWait')));
     AuthService.login(username, password)
       .then(async (response) => {
-        const authentication = _.get(response, 'data.data.authentication', '');
+        console.log(response);
+        const authentication = _.get(response, 'data.auth', '');
         const user = _.get(response, 'data.data.user', '');
         const permissions = _.get(response, 'data.data.permissions', []);
         dispatch(authenticate(authentication, user, permissions));
-        // navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         showError(err.response.data.message);
