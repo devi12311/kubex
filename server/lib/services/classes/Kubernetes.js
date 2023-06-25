@@ -7,6 +7,7 @@ class KubernetesService {
     kc.setCurrentContext(context);
     this.apiCoreV1 = kc.makeApiClient(k8s.CoreV1Api);
     this.apiAppsV1 = kc.makeApiClient(k8s.AppsV1Api);
+    this.apiExtensionsV1beta1 = kc.makeApiClient(k8s.NetworkingV1Api);
     this.customObjectsApi = kc.makeApiClient(k8s.CustomObjectsApi);
     this.namespace = namespace;
   }
@@ -116,29 +117,118 @@ class KubernetesService {
   }
 
   async getClusterStatistics() {
-    const { totalCPU, totalRAM } = await this.getTotalResources();
-    console.log("gotit");
-    const { allocatedCPU, allocatedRAM } = await this.getAllocatedResources();
-    console.log("gotit");
-    const maxPods = await this.getMaxPods();
-    console.log("gotit");
-    const allocatedPods = await this.getAllPods();
-    console.log("gotit");
+    try {
+      const namespaceCount = await this.getNamespaceCount();
+      const podCount = await this.getPodCount();
+      const deploymentCount = await this.getDeploymentCount();
+      const statefulSetCount = await this.getStatefulSetCount();
+      const serviceCount = await this.getServiceCount();
+      const ingressCount = await this.getIngressCount();
+      const pvcCount = await this.getPersistentVolumeClaimCount();
 
-    return {
-      ram: {
-        totalRAM,
-        allocatedRAM,
-      },
-      cpu: {
-        totalCPU,
-        allocatedCPU,
-      },
-      pods: {
-        maxPods,
-        allocatedPods,
-      },
-    };
+      const resources = [
+        { label: "Namespaces", number: namespaceCount },
+        { label: "Pods", number: podCount },
+        { label: "Deployments", number: deploymentCount },
+        { label: "StatefulSets", number: statefulSetCount },
+        { label: "Services", number: serviceCount },
+        { label: "Ingresses", number: ingressCount },
+        { label: "PersistentVolumeClaims", number: pvcCount },
+      ];
+
+      const response = await k8s.topNodes(this.apiCoreV1);
+
+      return {
+        cluster: response,
+        resources,
+      };
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async getNamespaceCount() {
+    try {
+      const response = await this.apiCoreV1.listNamespace();
+      return response.body.items.length;
+    } catch (error) {
+      console.error(
+        "Error retrieving namespaces:",
+        error.response.body.message
+      );
+      throw error;
+    }
+  }
+
+  async getPodCount() {
+    try {
+      const response = await this.apiCoreV1.listPodForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error("Error retrieving pods:", error.response.body.message);
+      throw error;
+    }
+  }
+
+  async getDeploymentCount() {
+    try {
+      const response = await this.apiAppsV1.listDeploymentForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error(
+        "Error retrieving deployments:",
+        error.response.body.message
+      );
+      throw error;
+    }
+  }
+
+  async getStatefulSetCount() {
+    try {
+      const response = await this.apiAppsV1.listStatefulSetForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error(
+        "Error retrieving StatefulSets:",
+        error.response.body.message
+      );
+      throw error;
+    }
+  }
+
+  async getServiceCount() {
+    try {
+      const response = await this.apiCoreV1.listServiceForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error("Error retrieving services:", error.response.body.message);
+      throw error;
+    }
+  }
+
+  async getIngressCount() {
+    try {
+      const response =
+        await this.apiExtensionsV1beta1.listIngressForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error("Error retrieving ingresses:", error.response.body.message);
+      throw error;
+    }
+  }
+
+  async getPersistentVolumeClaimCount() {
+    try {
+      const response =
+        await this.apiCoreV1.listPersistentVolumeClaimForAllNamespaces();
+      return response.body.items.length;
+    } catch (error) {
+      console.error(
+        "Error retrieving PersistentVolumeClaims:",
+        error.response.body.message
+      );
+      throw error;
+    }
   }
 }
 

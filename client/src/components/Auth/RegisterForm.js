@@ -23,9 +23,10 @@ const RegisterForm = () => {
     }
     e.preventDefault();
     dispatch(showSpinner('Please wait'));
+    console.log(username, password, email);
     AuthService.register(username, password, email)
       .then(async (response) => {
-        const authentication = _.get(response, 'data.data.authentication', '');
+        const authentication = _.get(response, 'data.data.auth', '');
         const user = _.get(response, 'data.data.user', '');
         const permissions = _.get(response, 'data.data.permissions', []);
         dispatch(authenticate(authentication, user, permissions));

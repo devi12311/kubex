@@ -10,6 +10,10 @@ const PersistentVolumeClaimService = {
   },
   destroy: (namespace, id) => {
     return API.delete(`${orgClusterPath}/nodes/${id}`);
+  },
+
+  resources: (namespace, id) => {
+    return API.get(`${orgClusterPath}/resources`);
   }
 };
 

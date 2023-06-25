@@ -38,7 +38,7 @@ module.exports = {
     const { Kubernetes } = request.server.app.services;
     const { cluster, context } = request.pre;
     const { kubeConfig } = cluster;
-    const { name, namespace } = request.params;
+    const { namespace } = request.params;
 
     const kubernetesService = new Kubernetes({
       file: kubeConfig,
@@ -47,7 +47,25 @@ module.exports = {
     });
 
     try {
-      return await kubernetesService.getClusterStatistics();
+      const statistics = await kubernetesService.getClusterStatistics();
+      const memory = statistics.cluster[0].Memory;
+      const cpu = statistics.cluster[0].CPU;
+
+      return {
+        ram: {
+          total: memory.Capacity.toString(),
+          used: memory.RequestTotal.toString(),
+          percentage: parseInt(
+            (memory.Capacity / memory.RequestTotal).toString()
+          ),
+        },
+        cpu: {
+          total: cpu.Capacity,
+          used: cpu.RequestTotal,
+          percentage: parseInt((cpu.RequestTotal / cpu.Capacity) * 100),
+        },
+        resources: statistics.resources,
+      };
     } catch (e) {
       console.log(e);
       return Boom.badRequest(e);

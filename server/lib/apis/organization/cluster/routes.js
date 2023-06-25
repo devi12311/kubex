@@ -3,7 +3,7 @@ const Joi = require("joi");
 const Boom = require("@hapi/boom");
 
 module.exports = async (server, options) => {
-  const { organization, cluster } = server.app.middlewares;
+  const { organization, cluster, context } = server.app.middlewares;
 
   server.route({
     method: "POST",
@@ -60,7 +60,7 @@ module.exports = async (server, options) => {
 
   server.route({
     method: "GET",
-    path: "/{id}",
+    path: "/{clusterId}",
     options: {
       auth: {
         access: {
@@ -71,7 +71,7 @@ module.exports = async (server, options) => {
       validate: {
         params: Joi.object({
           organizationId: Joi.string().uuid().required(),
-          id: Joi.string().uuid().required(),
+          clusterId: Joi.string().uuid().required(),
         }).required(),
       },
       pre: [
@@ -92,7 +92,7 @@ module.exports = async (server, options) => {
 
   server.route({
     method: "GET",
-    path: "/{id}/resources",
+    path: "/{clusterId}/resources",
     options: {
       auth: {
         access: {
@@ -103,12 +103,13 @@ module.exports = async (server, options) => {
       validate: {
         params: Joi.object({
           organizationId: Joi.string().uuid().required(),
-          id: Joi.string().uuid().required(),
+          clusterId: Joi.string().uuid().required(),
         }).required(),
       },
       pre: [
         organization,
         cluster,
+        context,
         {
           assign: "mapper",
           async method(request, h) {
@@ -122,7 +123,7 @@ module.exports = async (server, options) => {
 
   server.route({
     method: "DELETE",
-    path: "/{id}",
+    path: "/{clusterId}",
     options: {
       auth: {
         access: {
@@ -133,7 +134,7 @@ module.exports = async (server, options) => {
       validate: {
         params: Joi.object({
           organizationId: Joi.string().uuid().required(),
-          id: Joi.string().uuid().required(),
+          clusterId: Joi.string().uuid().required(),
         }).required(),
       },
       pre: [organization, cluster],

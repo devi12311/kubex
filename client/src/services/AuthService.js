@@ -5,7 +5,8 @@ const AuthService = {
   register: (username, password, email) => {
     return GuestAPI.post('/auth/register', {
       username,
-      password
+      password,
+      email
     });
   },
   login: (username, password) => {
